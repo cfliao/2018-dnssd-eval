@@ -24,8 +24,7 @@ PTR record用於表示「服務-實例」的mapping，因此上面的例子是�
 格式: service.transport.domain; TTL class SRV priority weight port target
 MyInstance._my-service._udp.local 10 IN SRV 0 0 9999 MyInstance.local
 ```
-在dns-sd中，priority和weight是無效的。
-SRV中的TTL不可為0，否則browser會找不到此服務實例。
+在dns-sd中，priority和weight是無效的。SRV中的TTL不可為0，否則browser會找不到此服務實例。
 
 ## 取得Service instance的詳細資訊
 此外，藉由TXT，可以key-value型式提供服務更詳細的資訊。根據這些資訊，服務要求者可以更詳細地評估此service instance是否適合其需求。
