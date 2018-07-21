@@ -7,7 +7,7 @@
 * 先發送一個PTR到群播位址
   
 ``` 
-&lt;service&gt;.&lt;transport&gt;.&lt;domain&gt;
+service.transport.domain
 例如: _my-service._udp.local PTR IN MyInstance._my-service._udp.local
 ```
 _my-service是service，_udp是transport，local是domain。dns-sd中，
@@ -21,7 +21,7 @@ PTR record用於表示「服務-實例」的mapping，因此上面的例子是�
 ## 取得Service instance 的host name與port
 接下來被找到的instance會送出SRV。藉由SRV，可提供真正instance所在地的domain name和port number。格式如下:
 ```
-格式: &lt;service&gt;.&lt;transport&gt;.&lt;domain&gt; TTL class SRV priority weight port target
+格式: service.transport.domain; TTL class SRV priority weight port target
 MyInstance._my-service._udp.local 10 IN SRV 0 0 9999 MyInstance.local
 ```
 在dns-sd中，priority和weight是無效的。
