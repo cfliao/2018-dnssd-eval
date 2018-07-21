@@ -3,6 +3,7 @@
 * mDNS群播位址是**224.0.0.251**，port **5353**
 * 範例檔案: index.js
 * 裝置收到服務發現要求之後，提供資料的方式: (1) 藉由PTR，提供裝置的instance名稱 (2)藉由SRV提供裝置的domain name和port (3)藉由TXT提供的裝置詳細資訊 (4) 藉由A或AAAA提供裝置所在IP
+* TODO: 範例中，只要接受到查詢要求，無論是否自身符合，一定會進行回應。應該要比對後，符合service type才回應。 
 
 ## 藉由service type找到service instance
 * 先發送一個PTR到群播位址
