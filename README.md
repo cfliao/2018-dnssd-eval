@@ -1,6 +1,7 @@
 # mDNS/dns-sd
 
 * mDNS群播位址是**224.0.0.251**，port **5353**
+* 範例檔案: success1.js
 
 ## 藉由service type找到service instance
 * 先發送一個PTR到群播位址
@@ -24,6 +25,7 @@ PTR record用於表示「服務-實例」的mapping，因此上面的例子是�
 MyInstance._my-service._udp.local 10 IN SRV 0 0 9999 MyInstance.local
 ```
 在dns-sd中，priority和weight是無效的。
+SRV中的TTL不可為0，否則browser會找不到此服務實例。
 
 ## 取得Service instance的詳細資訊
 此外，藉由TXT，可以key-value型式提供服務更詳細的資訊。根據這些資訊，服務要求者可以更詳細地評估此service instance是否適合其需求。
@@ -31,11 +33,15 @@ TXT的data區段必須依規範予以編碼。
 
 在實作上，我們使用dns-txt，它的encode方法接受一個物件做為參數，所以使用時要先將我們要為此instance設定的key-value pairs寫成JSON物件型式，再做為參數傳入。
 例如:
-```javascript 1.6
+```javascript 6
 const txt = require('dns-txt')();
 txt.encode({x:'hello'})
 ```
 上面的結果相當於傳入**x=hello**。
+
+## 可以用來測試的dns-sd Service Browsers
+* [Bonjour Browser](https://hobbyistsoftware.com/bonjourbrowser "Bonjour Browser")
+* [Zeroconf Service Browser](https://www.tobias-erichsen.de/software/zeroconfservicebrowser.html)
 
 ## note
 由上面的討論可知，從dns-sd中client可以得知的是service type、ip/port與詳細key-value資訊。它和UPnP最大的不同是UPnP還提供了呼叫其remote methods的 api signatures。
