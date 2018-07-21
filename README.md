@@ -38,6 +38,13 @@ txt.encode({x:'hello'})
 ```
 上面的結果相當於傳入**x=hello**。
 
+## 取得Service instance的host的ip
+最後，藉由A或AAAA (ipv6)，可以將service instance的local domain name對應到local ip，例如:
+```
+MyInstance.local 10 A 192.168.4.134 
+```
+將MyInstance.local這個domain name對應到192.168.4.134
+
 ## 可以用來測試的dns-sd Service Browsers
 * [Bonjour Browser](https://hobbyistsoftware.com/bonjourbrowser "Bonjour Browser")
 * [Zeroconf Service Browser](https://www.tobias-erichsen.de/software/zeroconfservicebrowser.html)
