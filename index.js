@@ -1,10 +1,4 @@
-const mdns = require('multicast-dns')({
-    multicast: true, // use udp multicasting
-    port: 5353, // set the udp port
-    ip: '224.0.0.251', // set the udp ip
-    loopback: true, // receive your own packets
-    reuseAddr: true // set the reuseAddr option when creating the socket (requires node >=0.11.13)
-});
+const mdns = require('multicast-dns')();
 const txt = require('dns-txt')();
 
 mdns.on('response', function (response) {
@@ -12,42 +6,34 @@ mdns.on('response', function (response) {
 });
 
 mdns.on('query', function (query) {
-    //console.log('got a query packet:', query);
+
     mdns.respond({
-        answers: [{
-            name: '_rosa._udp.local', ttl: 10, type: 'PTR', data: 'TTry._rosa._udp.local'
-        }, {
-            name: '_services._dns-sd._udp.local', ttl: 10, type: 'PTR', data: '_rosa._udp.local'
-        }, {
-            name: 'TTry.local',
-            type: 'A',
-            ttl: 120,
-            flush: true,
-            data: '192.168.4.134'
+        answers: [{ // _my-service 是 service type; MyInstance 是 instance name這個名稱要和下面TXT與SRV Records的name值一模一樣
+            name: '_my-service._udp.local', ttl: 10, type: 'PTR', data: 'MyInstance._my-service._udp.local'
+        }, {// _services._dns-sd._udp.local是用來讓browser列舉全域服務使用，一定要有
+            name: '_services._dns-sd._udp.local', ttl: 10, type: 'PTR', data: '_my-service._udp.local'
         }
         ], additionals: [
             {
-                name: 'TTry._rosa._udp.local',
+                name: 'MyInstance._my-service._udp.local',
                 type: 'TXT',
-                ttl: 60,
-                data: txt.encode({x:'hello'})
+                ttl: 10,
+                data: txt.encode({x:'hello'})// 將key:value填入JSON物件，才能正常運作
             }, {
-                name: 'TTry._rosa._udp.local',
+                name: 'MyInstance._my-service._udp.local',
                 type: 'SRV',
-                ttl: 60,
+                ttl: 10, // 此值一定不能為0，否則browser無法正常運作
                 flush: true,
                 data: {
                     port: 9999,
-                    weigth: 0,
-                    priority: 0,
-                    target: 'TTry.local'
+                    target: 'MyInstance.local' // 格式: InstanceName.local
                 }
             }, {
-                name: 'TTry.local',
+                name: 'MyInstance.local',
                 type: 'A',
-                ttl: 120,
+                ttl: 10,
                 flush: true,
-                data: '192.168.4.134'
+                data: '192.168.4.134' // 格式: InstanceName.local
             }
         ]
     });

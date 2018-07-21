@@ -1,7 +1,7 @@
 # mDNS/dns-sd
 
 * mDNS群播位址是**224.0.0.251**，port **5353**
-* 範例檔案: success1.js
+* 範例檔案: index.js
 
 ## 藉由service type找到service instance
 * 先發送一個PTR到群播位址
