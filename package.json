@@ -1,0 +1,8 @@
+{
+  "name": "2018-mdns-test",
+  "version": "0.0.1",
+  "dependencies": {
+    "multicast-dns": "^7.0.0",
+    "dns-txt": "^2.0.2"
+  }
+}
